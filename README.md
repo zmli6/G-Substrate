@@ -70,9 +70,10 @@ pip install llamafactory
 Download the G-Substrate dataset from HuggingFace:
 
 ```bash
-# TODO: Replace with your HuggingFace dataset URL
-# huggingface-cli download <org>/G-Substrate-Data --local-dir ./data
+huggingface-cli download zmli/G-Substrate-Data --repo-type dataset --local-dir ./data
 ```
+
+Dataset: [zmli/G-Substrate-Data](https://huggingface.co/datasets/zmli/G-Substrate-Data)
 
 ### Visual Genome Images (for SGG)
 
@@ -150,9 +151,10 @@ sbatch inference/run.sbatch
 Download the G-Substrate checkpoint from HuggingFace:
 
 ```bash
-# TODO: Replace with your HuggingFace model URL
-# huggingface-cli download <org>/G-Substrate-Qwen3-VL-2B --local-dir ./model
+huggingface-cli download zmli/G-Substrate-Qwen3-VL-2B --local-dir ./model
 ```
+
+Model: [zmli/G-Substrate-Qwen3-VL-2B](https://huggingface.co/zmli/G-Substrate-Qwen3-VL-2B)
 
 **Tasks**: GAR (Graph Algorithmic Reasoning: CT/CD/SP/BM), MGD (Molecular Graph Description: BLEU-4/ROUGE-L), SGG (Scene Graph Generation: PCIs R@50), ERE (Event Relation Extraction: F1 on MA-S/MA-T/MA-C/HiE).
 
