@@ -1,0 +1,25 @@
+# G-Substrate Dependencies
+
+# ---- Core ----
+torch>=2.1.0
+transformers>=4.40.0
+vllm>=0.4.0
+
+# ---- Training ----
+# LLaMA-Factory (install separately: pip install llamafactory)
+# llamafactory>=0.9.0
+deepspeed>=0.14.0
+
+# ---- Evaluation ----
+nltk>=3.8
+rouge>=1.0.0
+sentence-transformers>=2.2.0
+numpy>=1.24.0
+tqdm>=4.65.0
+networkx>=3.0
+
+# ---- Utilities ----
+pyyaml>=6.0
+fire>=0.5.0
+datasets>=2.14.0
+accelerate>=0.27.0

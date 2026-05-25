@@ -1,0 +1,33 @@
+# G-Substrate Configuration
+# ========================
+# Centralized configuration for all paths and settings.
+# Copy this file and modify paths for your environment.
+
+# ---- Paths ----
+model_dir: ""                    # Path to model checkpoint or HuggingFace model ID
+data_dir: ""                     # Path to dataset directory (containing train/ and test/)
+output_dir: "./outputs"          # Inference output directory
+hf_cache: ""                     # HuggingFace cache directory (optional)
+
+# Visual Genome images (required for SGG evaluation)
+vg_images_dir: ""                # Path to VG_100K / VG_100K_2 images
+
+# ---- Inference ----
+max_new_tokens: 4096
+tensor_parallel_size: 1
+gpu_memory_utilization: 0.95
+max_model_len: 16384
+template: "qwen3_vl_nothink"    # qwen3_vl_nothink | internvl
+
+# ---- Training (LLaMA-Factory) ----
+# See training/configs/ for YAML templates.
+# Training is launched via LLaMA-Factory CLI:
+#   llamafactory-cli train training/configs/sft_multi_task.yaml
+
+# ---- Evaluation ----
+# Test datasets (relative to data_dir):
+test_files:
+  event_graph: "test/event_graph.json"
+  graph_search: "test/graph_search.json"
+  molecular: "test/molecular.json"
+  scene_graph: "test/scene_graph.json"

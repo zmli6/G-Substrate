@@ -1,0 +1,46 @@
+### G-Substrate Single-Task SFT Configuration
+### Used with LLaMA-Factory: llamafactory-cli train training/configs/sft_single.yaml
+
+### Model
+model_name_or_path: Qwen/Qwen3-VL-2B-Instruct
+trust_remote_code: true
+
+### Method
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: false
+deepspeed: ds_z3_config.json
+
+### Dataset
+# Update dataset name to the specific task you want to train on:
+#   event_graph, graph_search, molecular, scene_graph
+dataset: scene_graph
+dataset_dir: ./data                   # Directory containing dataset_info.json
+template: qwen2_vl
+cutoff_len: 4096
+preprocessing_num_workers: 16
+
+### Output
+output_dir: ./saves/g_substrate_single
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+
+### Training Hyperparameters
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 32
+learning_rate: 8.0e-6
+num_train_epochs: 4.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.10
+bf16: true
+ddp_timeout: 180000000
+gradient_checkpointing: true
+
+### Evaluation
+val_size: 0.01
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 500
