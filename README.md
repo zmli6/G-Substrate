@@ -1,6 +1,14 @@
 # G-Substrate: Graph is a Substrate Across Data Modalities
 
-This repository contains the code and data for the paper:
+<p align="center">
+  <a href="https://huggingface.co/datasets/zmli/G-Substrate-Data"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-G--Substrate--Data-yellow" alt="Dataset"></a>
+  <a href="https://huggingface.co/zmli/G-Substrate-Qwen3-VL-2B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-G--Substrate--Qwen3--VL--2B-blue" alt="Model"></a>
+  <a href="https://arxiv.org/abs/2601.22384"><img src="https://img.shields.io/badge/arXiv-2601.22384-b31b1b" alt="arXiv"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/ICML-2026-purple" alt="ICML 2026"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a>
+</p>
+
+This repository contains the code for the paper:
 
 > **Graph is a Substrate Across Data Modalities**
 > Ziming Li, Xiaoming Wu, Zehong Wang, Jiazheng Li, Yijun Tian, Jinhe Bi, Yunpu Ma, Yanfang Ye, Chuxu Zhang
@@ -13,28 +21,27 @@ G-Substrate introduces a representation-centric perspective where graph structur
 1. **Unified Structural Schema**: Ensures compatibility among graph representations across modalities and tasks.
 2. **Interleaved Role-Based Training**: Exposes the same graph structure to multiple functional roles (generation and understanding) during learning.
 
+## Main Results
+
+| Method | CT | CD | SP | BM | BLEU-4 | ROUGE-L | PCIs | MA-S | MA-T | MA-C | HiE |
+|--------|----:|----:|----:|----:|-------:|--------:|-----:|-----:|-----:|-----:|----:|
+| G-Substrate | 98.41 | 96.97 | 48.59 | 94.54 | 51.53 | 68.47 | 25.38 | 52.20 | 42.68 | 40.91 | 25.15 |
+
+**Tasks**: GAR (Graph Algorithmic Reasoning: CT/CD/SP/BM), MGD (Molecular Graph Description: BLEU-4/ROUGE-L), SGG (Scene Graph Generation: PCIs R@50), ERE (Event Relation Extraction: F1 on MA-S/MA-T/MA-C/HiE).
+
 ## Repository Structure
 
 ```
 G-Substrate/
-├── config.yaml                   # Centralized configuration
-├── setup_env.sh                  # Environment setup
-├── requirements.txt              # Python dependencies
-│
 ├── data_processing/              # Data transformation pipeline
 │   ├── transform_sgg.py          # Scene graph → unified schema
 │   ├── transform_mol.py          # Molecular graph → unified schema
 │   ├── transform_nlgraph.py      # Graph algorithmic tasks → unified schema
 │   ├── transform_event.py        # Event graph → unified schema
-│   ├── generate_interleave.py    # Generate interleaved role-based tasks
-│   └── utils/
-│       ├── merge_shuffle.py      # Merge and shuffle datasets
-│       └── analyze_graph_sizes.py
+│   └── generate_interleave.py    # Generate interleaved role-based tasks
 │
 ├── training/                     # Training with LLaMA-Factory
-│   ├── configs/
-│   │   ├── sft_multi_task.yaml   # Multi-task SFT config
-│   │   └── sft_single.yaml      # Single-task SFT config
+│   ├── configs/                  # Multi-task & single-task SFT configs
 │   ├── dataset_info.json         # LLaMA-Factory dataset registry
 │   └── train.sbatch              # SLURM training script
 │
@@ -42,15 +49,7 @@ G-Substrate/
     ├── infer.py                  # vLLM inference
     ├── evaluate.py               # Unified evaluation router
     ├── run.sh                    # Single entry: infer → evaluate
-    ├── run.sbatch                # SLURM version
     └── evaluators/               # Task-specific evaluators
-        ├── graph_search_eval.py
-        ├── mol_eval.py
-        ├── event_graph_eval.py
-        └── sgg_eval/
-            ├── vg_sgg_eval.py
-            ├── vg_metadata.json
-            └── vg150_gt.pkl
 ```
 
 ## Setup
@@ -65,15 +64,11 @@ pip install llamafactory
 
 ## Data
 
-### Download
-
-Download the G-Substrate dataset from HuggingFace:
+Download the dataset from HuggingFace:
 
 ```bash
 huggingface-cli download zmli/G-Substrate-Data --repo-type dataset --local-dir ./data
 ```
-
-Dataset: [zmli/G-Substrate-Data](https://huggingface.co/datasets/zmli/G-Substrate-Data)
 
 ### Visual Genome Images (for SGG)
 
@@ -148,15 +143,11 @@ sbatch inference/run.sbatch
 
 ## Pre-trained Model
 
-Download the G-Substrate checkpoint from HuggingFace:
+Download the model from HuggingFace:
 
 ```bash
 huggingface-cli download zmli/G-Substrate-Qwen3-VL-2B --local-dir ./model
 ```
-
-Model: [zmli/G-Substrate-Qwen3-VL-2B](https://huggingface.co/zmli/G-Substrate-Qwen3-VL-2B)
-
-**Tasks**: GAR (Graph Algorithmic Reasoning: CT/CD/SP/BM), MGD (Molecular Graph Description: BLEU-4/ROUGE-L), SGG (Scene Graph Generation: PCIs R@50), ERE (Event Relation Extraction: F1 on MA-S/MA-T/MA-C/HiE).
 
 ## Citation
 
